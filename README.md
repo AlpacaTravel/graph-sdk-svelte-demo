@@ -2,9 +2,13 @@
 
 Svelte offers an excellent environment for developing lightweight vanilla JavaScript applications.
 
-This demo shows that you can build a working site, loading a list of places you have selected from an Alpaca Collection, and can allow users to manage an itinerary, all without heavy project libraries.
+This demo shows that you can build a working site:
 
-The total demo size is ~10KB for all dependencies. Network requests leverage GraphQL to only fetch the data needed.
+- Load a list of places from a collection you have made
+- Add/Remove items from an itinerary
+- View your itinerary
+
+The total demo size is ~10KB for all dependencies, demonstrating that these functions can be lightweight. Network requests leverage GraphQL to only fetch the data needed.
 
 ## Running local
 
