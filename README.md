@@ -1,10 +1,10 @@
 # Svelte Demo using @alpaca-travel/graph-sdk
 
-Svelte offers a lightweight vanilla JavaScript.
+Svelte offers an excellent environment for developing lightweight vanilla JavaScript applications.
 
-This demo shows that you can build a working site, loading a list of places you have selected from an Alpaca Collection, and can allow users to manage an itinerary.
+This demo shows that you can build a working site, loading a list of places you have selected from an Alpaca Collection, and can allow users to manage an itinerary, all without heavy project libraries.
 
-The total demo size is ~10KB for all dependencies.
+The total demo size is ~10KB for all dependencies. Network requests leverage GraphQL to only fetch the data needed.
 
 ## Running local
 
