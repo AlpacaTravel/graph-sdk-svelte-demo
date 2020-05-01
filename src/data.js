@@ -6,7 +6,9 @@ export const client = new Client({
     "pk.eyJwaWQiOiI2MDRqSmZlOTJEeTRjYVBZV1hrZlVHIiwiaWF0IjoxNTg4MjkxMzAyfQ._YTgoyEscLTVbwUaeDr7VQLaF6TpjpIf3hc8pqOjNt8",
 });
 
-export const ITINERARY_LOCATIONS = `
+/* --- Example GraphQL Queries --- */
+
+export const ITINERARY_LOCATIONS = /* GraphQL */ `
   query Locations($id: ID!) {
     itinerary(id: $id) {
       root {
@@ -25,7 +27,7 @@ export const ITINERARY_LOCATIONS = `
   }
 `;
 
-export const ITEMS = `
+export const ITEMS = /* GraphQL */ `
   query Items($id: ID!) {
     collectionTmp(id: $id) {
       items {
@@ -41,7 +43,7 @@ export const ITEMS = `
   }
 `;
 
-export const PLACE_PRESENT = `
+export const PLACE_PRESENT = /* GraphQL */ `
   query IsPlaceInItinerary($id: ID!, $place: ID!) {
     itinerary(id: $id) {
       root {
@@ -53,34 +55,35 @@ export const PLACE_PRESENT = `
   }
 `;
 
-export const CREATE_ITINERARY = `
+export const CREATE_ITINERARY = /* GraphQL */ `
   mutation CreateAnonymousItinerary {
     createItinerary {
-      itinerary { id }
+      itinerary {
+        id
+      }
     }
   }
 `;
 
-export const CREATE_ITINERARY_LOCATION = `
+export const CREATE_ITINERARY_LOCATION = /* GraphQL */ `
   mutation CreateLocation($id: ID!, $placeId: ID!, $title: String!) {
     insertItineraryLocation(
       itineraryId: $id
-      location: {
-        title: $title
-        place: {
-          id: $placeId
-        }
-      }
+      location: { title: $title, place: { id: $placeId } }
     ) {
-      location { id }
+      location {
+        id
+      }
     }
   }
 `;
 
-export const REMOVE_ITINERARY_LOCATION = `
+export const REMOVE_ITINERARY_LOCATION = /* GraphQL */ `
   mutation RemoveLocation($id: ID!) {
     deleteItineraryItem(id: $id) {
-      item { id }
+      item {
+        id
+      }
     }
   }
 `;

@@ -4,9 +4,9 @@ Svelte offers an excellent environment for developing lightweight vanilla JavaSc
 
 This demo shows that you can build a working site:
 
-- Load a list of places from a collection you have made :earth_africa: :earth_americas: :earth_asia:
+- Load a list of curated places you've added to an Alpaca collection :earth_africa: :earth_americas: :earth_asia:
 - Add/Remove/View items from an itinerary :hammer: :wrench: :rocket:
-- Network calls using GraphQL to only fetch the data needed :envelope:
+- Network calls using GraphQL to only fetch the data needed :envelope: :speedboat:
 - Lightweight ~10KB total for app and dependencies :school_satchel:
 
 ## Running local
