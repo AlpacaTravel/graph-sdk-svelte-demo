@@ -1,10 +1,14 @@
-# @alpaca-travel/graph-sdk Svelte Example
+# Svelte Demo using @alpaca-travel/graph-sdk
 
-This example app is to demonstrate some of the integration to the Alpaca graph-sdk using a trivial svelte example.
+Svelte offers a lightweight vanilla JavaScript.
+
+This demo shows that you can build a working site, loading a list of places you have selected from an Alpaca Collection, and can allow users to manage an itinerary.
+
+The total demo size is ~10KB for all dependencies.
 
 ## Running local
 
-Clone this library down, and you can then run the following command:
+Clone this demo down, and you can then run the following command:
 
 ```
 npm install
