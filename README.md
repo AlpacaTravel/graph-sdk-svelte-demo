@@ -4,11 +4,10 @@ Svelte offers an excellent environment for developing lightweight vanilla JavaSc
 
 This demo shows that you can build a working site:
 
-- Load a list of places from a collection you have made
-- Add/Remove items from an itinerary
-- View your itinerary
-
-The total demo size is ~10KB for all dependencies, demonstrating that these functions can be lightweight. Network requests leverage GraphQL to only fetch the data needed.
+- Load a list of places from a collection you have made :earth_africa: :earth_americas: :earth_asia:
+- Add/Remove/View items from an itinerary :hammer: :wrench: :rocket:
+- Network calls using GraphQL to only fetch the data needed :envelope:
+- Lightweight ~10KB total for app and dependencies :school_satchel:
 
 ## Running local
 
