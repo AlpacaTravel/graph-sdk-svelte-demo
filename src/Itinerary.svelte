@@ -6,41 +6,47 @@
     REMOVE_ITINERARY_LOCATION
   } from "./data";
 
-  // Identify an itinerary
+  // Obtain a context to the itinerary ref
   let itineraryRef;
   const itineraryStore = getContext("itinerary");
   itineraryStore.subscribe(value => {
+    // e.g. itinerary/abcd
     itineraryRef = value;
   });
 
   // Grab the itinerary locations
-  export function query(id) {
-    if (id) {
-      return client.query({ query: ITINERARY_LOCATIONS, variables: { id } });
+  export function fetchItineraryLocations(ref) {
+    if (ref) {
+      // Use GraphQL to obtain the list of locations
+      // See the data.js for GraphQL queries
+      return client.query({
+        query: ITINERARY_LOCATIONS,
+        variables: { id: ref }
+      });
     }
   }
 
-  // Remove
-  export async function remove(locationId) {
-    // Remove
+  // Remove an itinerary location from the itinerary
+  export async function removeItineraryLocation(locationId) {
+    // Use GraphQL to remove the itinerary location
     await client.query({
       query: REMOVE_ITINERARY_LOCATION,
       variables: { id: locationId }
     });
 
-    // Refresh
-    result = query(itineraryRef);
+    // Refresh the itinerary locations after removal
+    result = fetchItineraryLocations(itineraryRef);
   }
 
   // Push up and allow simple caching mechanism
-  $: result = query(itineraryRef);
+  $: result = fetchItineraryLocations(itineraryRef);
 </script>
 
 <section>
   <h2>Itinerary Locations</h2>
 
   {#await result}
-    <p>Preloading locations....</p>
+    <p>Obtaining locations....</p>
   {:then response}
     {#if response}
       <ul>
@@ -50,7 +56,9 @@
             {#if location.place.name && location.title !== location.place.name}
               ({location.place.name})
             {/if}
-            <button on:click={() => remove(location.id)}>Remove</button>
+            <button on:click={() => removeItineraryLocation(location.id)}>
+              Remove
+            </button>
           </li>
         {:else}
           <li>No locations found</li>
