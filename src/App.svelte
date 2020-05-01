@@ -1,33 +1,27 @@
 <script>
-  import { client, LOCATIONS } from "./data";
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
 
-  export function preload() {
-    const id = "itinerary/97b0cac1-52c3-11ea-96fe-067ec0c7e8f4";
-    return client.query({ query: LOCATIONS, variables: { id } });
-  }
+  import Places from "./Places.svelte";
+  import Itinerary from "./Itinerary.svelte";
 
-  const locationsPreloading = preload();
+  const itinerary = writable();
+
+  setContext("itinerary", itinerary);
+
+  // Create a navigation
+  let section = "places";
+  const setSection = s => {
+    section = s;
+  };
 </script>
 
 <section>
-  <h2>Locations (simple query)</h2>
-
-  {#await locationsPreloading}
-    <p>Preloading locations....</p>
-  {:then preloaded}
-    <ul>
-      {#each preloaded.itinerary.root.locations as location (location.id)}
-        <li>
-          {location.title}
-          {#if location.place.name && location.title !== location.place.name}
-            ({location.place.name})
-          {/if}
-        </li>
-      {:else}
-        <li>No locations found</li>
-      {/each}
-    </ul>
-  {:catch error}
-    <p>Error preloading locations: {error}</p>
-  {/await}
+  {#if section === 'places'}
+    <button on:click={() => setSection('itinerary')}>View Itinerary</button>
+    <Places />
+  {:else}
+    <button on:click={() => setSection('places')}>Find Places</button>
+    <Itinerary />
+  {/if}
 </section>
