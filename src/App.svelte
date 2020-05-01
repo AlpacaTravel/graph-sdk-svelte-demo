@@ -1,27 +1,29 @@
 <script>
-  import { setContext } from "svelte";
+  import { setContext, onMount } from "svelte";
   import { writable } from "svelte/store";
 
   import Places from "./Places.svelte";
   import Itinerary from "./Itinerary.svelte";
 
+  // Context to the itinerary
   const itinerary = writable();
-
   setContext("itinerary", itinerary);
 
-  // Create a navigation
-  let section = "places";
-  const setSection = s => {
-    section = s;
-  };
+  // Cheap nav
+  let section = window.location.hash.slice(1);
+  async function hashchange() {
+    section = window.location.hash.slice(1);
+  }
 </script>
 
+<svelte:window on:hashchange={hashchange} />
+
 <section>
-  {#if section === 'places'}
-    <button on:click={() => setSection('itinerary')}>View Itinerary</button>
+  {#if section === '/places'}
+    <a href="#/itinerary">View Itinerary</a>
     <Places />
   {:else}
-    <button on:click={() => setSection('places')}>Find Places</button>
+    <a href="#/places">View Itinerary</a>
     <Itinerary />
   {/if}
 </section>

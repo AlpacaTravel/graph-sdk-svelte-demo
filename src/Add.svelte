@@ -10,15 +10,17 @@
   export let place = null;
   export let item = null;
 
-  const itineraryStore = getContext("itinerary");
-
+  // Itinerary selection
   let itinerary;
 
+  // Watch the itinerary selection
+  const itineraryStore = getContext("itinerary");
   const unsubscribe = itineraryStore.subscribe(id => {
     itinerary = id;
   });
 
-  const query = async function(p) {
+  // Check if we have the current place selected
+  const queryPlaceInItinerary = async function(p) {
     if (itinerary && p && p.id) {
       return client.query({
         query: PLACE_PRESENT,
@@ -30,7 +32,8 @@
     }
   };
 
-  const create = async function() {
+  // Create an anonymous itinerary
+  const createAnonymousItinerary = async function() {
     const result = await client.query({
       query: CREATE_ITINERARY
     });
@@ -38,14 +41,18 @@
     return result.createItinerary.itinerary.id;
   };
 
-  const add = async function(p) {
+  // Add a location
+  const addLocation = async function(p) {
     if (p && p.id) {
       let itineraryValue = itinerary;
+
+      // If we don't have an itinerary
       if (!itineraryValue) {
-        itineraryValue = await create();
+        itineraryValue = await createAnonymousItinerary();
         itineraryStore.update(() => itineraryValue);
       }
 
+      // Add the location
       await client.query({
         query: CREATE_ITINERARY_LOCATION,
         variables: {
@@ -57,17 +64,19 @@
     }
   };
 
-  $: result = query(place);
+  $: result = queryPlaceInItinerary(place);
 </script>
 
 {#if !itinerary}
-  <button on:click={() => add(place)}>Add</button>
+  <button on:click={() => addLocation(place)}>Add</button>
 {:else}
   {#await result}
     <p>checking itinerary</p>
   {:then response}
-    {#if response && response.itinerary.root.descendants.length === 0}
-      <button on:click={() => add(place)}>Add</button>
+    {#if response && response.itinerary}
+      {#if response.itinerary.root.descendants.length === 0}
+        <button on:click={() => addLocation(place)}>Add</button>
+      {:else}Added{/if}
     {/if}
   {/await}
 {/if}

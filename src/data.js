@@ -6,7 +6,7 @@ export const client = new Client({
     "pk.eyJwaWQiOiI2MDRqSmZlOTJEeTRjYVBZV1hrZlVHIiwiaWF0IjoxNTg4MjkxMzAyfQ._YTgoyEscLTVbwUaeDr7VQLaF6TpjpIf3hc8pqOjNt8",
 });
 
-export const LOCATIONS = `
+export const ITINERARY_LOCATIONS = `
   query Locations($id: ID!) {
     itinerary(id: $id) {
       root {
@@ -73,6 +73,14 @@ export const CREATE_ITINERARY_LOCATION = `
       }
     ) {
       location { id }
+    }
+  }
+`;
+
+export const REMOVE_ITINERARY_LOCATION = `
+  mutation RemoveLocation($id: ID!) {
+    deleteItineraryItem(id: $id) {
+      item { id }
     }
   }
 `;

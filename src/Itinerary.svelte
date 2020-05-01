@@ -1,28 +1,43 @@
 <script>
   import { getContext } from "svelte";
-  import { client, LOCATIONS } from "./data";
+  import {
+    client,
+    ITINERARY_LOCATIONS,
+    REMOVE_ITINERARY_LOCATION
+  } from "./data";
 
-  export let onItem = console.log;
+  // Identify an itinerary
+  let itineraryRef;
+  const itineraryStore = getContext("itinerary");
+  itineraryStore.subscribe(value => {
+    itineraryRef = value;
+  });
 
-  const itinerary = getContext("itinerary");
-  console.log(itinerary);
-
+  // Grab the itinerary locations
   export function query(id) {
     if (id) {
-      return client.query({ query: LOCATIONS, variables: { id } });
+      return client.query({ query: ITINERARY_LOCATIONS, variables: { id } });
     }
   }
 
-  // Push up and allow simple caching mechanism
-  let result;
+  // Remove
+  export async function remove(locationId) {
+    // Remove
+    await client.query({
+      query: REMOVE_ITINERARY_LOCATION,
+      variables: { id: locationId }
+    });
 
-  const unsubscribe = itinerary.subscribe(value => {
-    result = query(value);
-  });
+    // Refresh
+    result = query(itineraryRef);
+  }
+
+  // Push up and allow simple caching mechanism
+  $: result = query(itineraryRef);
 </script>
 
 <section>
-  <h2>Locations (simple query)</h2>
+  <h2>Itinerary Locations</h2>
 
   {#await result}
     <p>Preloading locations....</p>
@@ -30,11 +45,12 @@
     {#if response}
       <ul>
         {#each response.itinerary.root.locations as location (location.id)}
-          <li on:click={() => onItem(location)}>
+          <li>
             {location.title}
             {#if location.place.name && location.title !== location.place.name}
               ({location.place.name})
             {/if}
+            <button on:click={() => remove(location.id)}>Remove</button>
           </li>
         {:else}
           <li>No locations found</li>

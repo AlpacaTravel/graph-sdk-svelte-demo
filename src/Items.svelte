@@ -1,8 +1,9 @@
 <script>
   import { client, ITEMS } from "./data";
 
-  export let onItem = console.log;
+  export let onItem;
 
+  // Load our collection items
   export function query() {
     const id = "collection/6ea6iIu3imPan8jjDHVerY";
     return client.query({ query: ITEMS, variables: { id } });

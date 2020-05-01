@@ -6,7 +6,12 @@
   $: stringified = stringified = JSON.stringify(item);
 </script>
 
-<h2>Place</h2>
+<h2>
+  {item.title}
+  {#if item.resource.name && item.resource.name !== item.title}
+    ({item.resource.name})
+  {/if}
+</h2>
 {#if item.resource.id}
   <Add place={item.resource} {item} />
 {/if}
