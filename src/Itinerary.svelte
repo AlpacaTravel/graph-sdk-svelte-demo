@@ -5,6 +5,7 @@
     ITINERARY_LOCATIONS,
     REMOVE_ITINERARY_LOCATION
   } from "./data";
+  import RemoveItineraryLocation from "./RemoveItineraryLocation.svelte";
 
   // Obtain a context to the itinerary ref
   let itineraryRef;
@@ -26,15 +27,7 @@
     }
   }
 
-  // Remove an itinerary location from the itinerary
-  export async function removeItineraryLocation(locationId) {
-    // Use GraphQL to remove the itinerary location
-    await client.query({
-      query: REMOVE_ITINERARY_LOCATION,
-      variables: { id: locationId }
-    });
-
-    // Refresh the itinerary locations after removal
+  function refresh() {
     result = fetchItineraryLocations(itineraryRef);
   }
 
@@ -43,7 +36,7 @@
 </script>
 
 <section>
-  <h2>Itinerary Locations</h2>
+  <h2>Itinerary</h2>
 
   {#await result}
     <p>Obtaining locations....</p>
@@ -56,9 +49,9 @@
             {#if location.place.name && location.title !== location.place.name}
               ({location.place.name})
             {/if}
-            <button on:click={() => removeItineraryLocation(location.id)}>
-              Remove
-            </button>
+            <RemoveItineraryLocation
+              itineraryLocation={location}
+              onRemove={refresh} />
           </li>
         {:else}
           <li>No locations found</li>

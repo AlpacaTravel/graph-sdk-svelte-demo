@@ -1,5 +1,5 @@
 <script>
-  import Add from "./Add.svelte";
+  import AddItineraryLocation from "./AddItineraryLocation.svelte";
 
   export let item;
 
@@ -13,6 +13,6 @@
   {/if}
 </h2>
 {#if item.resource.id}
-  <Add place={item.resource} {item} />
+  <AddItineraryLocation from={item} />
 {/if}
 {stringified}
