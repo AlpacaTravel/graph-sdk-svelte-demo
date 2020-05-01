@@ -6,6 +6,9 @@
   let item = null;
   const setItem = i => {
     item = i;
+
+    // Scroll to top on selection
+    window.scrollTo(0, 0);
   };
 </script>
 
