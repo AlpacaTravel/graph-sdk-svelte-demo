@@ -28,15 +28,42 @@ export const ITINERARY_LOCATIONS = /* GraphQL */ `
 `;
 
 export const ITEMS = /* GraphQL */ `
-  query Items($id: ID!) {
-    collectionTmp(id: $id) {
-      items {
-        id
-        title
-        resource {
+  query Items($collectionIds: [String!]) {
+    collectionItems(collectionIds: $collectionIds, first: 5) {
+      nodes {
+        __typename
+        ... on CollectionLocation {
           id
-          name
+          title
+          place {
+            id
+            position
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const ITEM = /* GraphQL */ `
+  query Item($id: ID!) {
+    collectionItem(id: $id) {
+      id
+      __typename
+      ... on CollectionLocation {
+        title
+        tags
+        description
+        attrIds
+        place {
+          id
           position
+          address {
+            addressLineOne
+            locality
+            regionCode
+          }
         }
       }
     }
