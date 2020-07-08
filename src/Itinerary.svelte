@@ -43,7 +43,7 @@
   {:then response}
     {#if response}
       <ul>
-        {#each response.itinerary.root.locations as location (location.id)}
+        {#each response.itinerary.descendants.nodes as location (location.id)}
           <li>
             {location.title}
             {#if location.place.name && location.title !== location.place.name}

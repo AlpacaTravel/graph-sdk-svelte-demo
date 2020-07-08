@@ -11,12 +11,13 @@ export const client = new Client({
 export const ITINERARY_LOCATIONS = /* GraphQL */ `
   query Locations($id: ID!) {
     itinerary(id: $id) {
-      root {
-        locations: descendants(type: ItineraryLocation) {
+      descendants(first: 100) {
+        nodes {
           ... on ItineraryLocation {
             id
             title
             place {
+              id
               name
               position
             }
@@ -50,12 +51,10 @@ export const ITEM = /* GraphQL */ `
   query Item($id: ID!) {
     collectionItem(id: $id) {
       id
-      __typename
       ... on CollectionLocation {
         title
         tags
         description
-        attrIds
         place {
           id
           position
@@ -73,8 +72,8 @@ export const ITEM = /* GraphQL */ `
 export const PLACE_PRESENT = /* GraphQL */ `
   query IsPlaceInItinerary($id: ID!, $place: ID!) {
     itinerary(id: $id) {
-      root {
-        descendants(filterByPlaceId: $place) {
+      descendants(first: 1, placeId: $place) {
+        nodes {
           id
         }
       }
@@ -94,7 +93,7 @@ export const CREATE_ITINERARY = /* GraphQL */ `
 
 export const CREATE_ITINERARY_LOCATION = /* GraphQL */ `
   mutation CreateLocation($id: ID!, $placeId: ID!, $title: String!) {
-    insertItineraryLocation(
+    createItineraryLocation(
       itineraryId: $id
       location: { title: $title, place: { id: $placeId } }
     ) {
@@ -108,9 +107,7 @@ export const CREATE_ITINERARY_LOCATION = /* GraphQL */ `
 export const REMOVE_ITINERARY_LOCATION = /* GraphQL */ `
   mutation RemoveLocation($id: ID!) {
     deleteItineraryItem(id: $id) {
-      item {
-        id
-      }
+      id
     }
   }
 `;

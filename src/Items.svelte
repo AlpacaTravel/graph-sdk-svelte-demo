@@ -5,7 +5,7 @@
 
   // Load our collection items
   export function query() {
-    const id = "collection/6wNc8cjOe3kTWagFYO4v4f";
+    const id = "collection/4m2hSusvAkPHpLb36NJ5BV";
     return client.query({ query: ITEMS, variables: { collectionIds: id } });
   }
 

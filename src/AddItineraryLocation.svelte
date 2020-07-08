@@ -78,7 +78,7 @@
     <p>checking itinerary</p>
   {:then response}
     {#if response && response.itinerary}
-      {#if response.itinerary.root.descendants.length === 0}
+      {#if response.itinerary.descendants.nodes.length === 0}
         <button on:click={() => addItineraryLocation({ title, place })}>
           Add
         </button>
